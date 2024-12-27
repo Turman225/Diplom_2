@@ -12,7 +12,6 @@ def register_new_user_and_return_params():
 
 # создаём список, чтобы метод мог его вернуть
     login_pass = []
-
     # генерируем логин, пароль и имя курьера
     email = f'{create_random_string(8)}@mail.ru'
     password = create_random_string(12)
