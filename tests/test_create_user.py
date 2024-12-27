@@ -9,6 +9,7 @@ class TestCreateUser:
     def test_create_user(self, create_user_model):
         create_user_model.create_user(data.create_user_payload)
         create_user_model.check_status_code(200)
+        print(create_user_model.get_auth_token())
         create_user_model.check_create_user_successfully()
 
     @allure.title("Проверка вывода ошибки при создании пользователя без почты, логина или пароля")
@@ -17,6 +18,7 @@ class TestCreateUser:
         payload = data.create_user_payload.copy()
         payload[key] = None
         create_user_model.create_user(payload)
+        print(create_user_model.get_auth_token())
         create_user_model.check_status_code(403)
         create_user_model.check_registration_error()
 
@@ -24,5 +26,6 @@ class TestCreateUser:
     def test_error_on_duplicate_user_creation(self, create_user_model):
         create_user_model.create_user(data.created_user_payload)
         create_user_model.check_status_code(403)
+        print(create_user_model.get_auth_token())
         create_user_model.check_create_user_failed()
         create_user_model.check_user_already_exist_error()

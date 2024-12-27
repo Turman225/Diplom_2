@@ -3,15 +3,20 @@ from models.create_user_model import CreateUserAPI
 from models.login_user_model import LoginUserAPI
 from models.user_model import UserAPI
 from models.get_order_model import GetOrderAPI
+from models.delete_user_model import DeleteUserAPI
+import src.data as data
 import pytest
 import requests
 
 
-@pytest.fixture()
+@pytest.fixture(scope='function')
 def create_user_model():
     response = requests
     create_user_model = CreateUserAPI(response)
-    return create_user_model
+    yield create_user_model
+    delete_user_model = DeleteUserAPI(response)
+    if create_user_model.get_auth_token():
+        delete_user_model.delete_user({'Authrization': create_user_model.get_auth_token()})
 
 @pytest.fixture()
 def login_user_model():

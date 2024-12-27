@@ -13,6 +13,11 @@ class APIClient():
         self.response = requests.post(f'{data.URL}{endpoint}', **kwargs)
         return self.response
 
+    @allure.step('Отправляем DELETE запрос')
+    def delete_method(self, endpoint, **kwargs):
+        self.response = requests.delete(f'{data.URL}{endpoint}', **kwargs)
+        return self.response
+
     def patch_method(self, endpoint, **kwargs):
         self.response = requests.patch(f'{data.URL}{endpoint}', **kwargs)
         return self.response

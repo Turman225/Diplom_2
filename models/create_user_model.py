@@ -7,6 +7,13 @@ class CreateUserAPI(APIClient):
     def create_user(self, payloads):
         self.post_method(data.CREATE_USER, data=payloads)
 
+    def get_auth_token(self):
+        response_body = self.get_response_body
+        if 'accessToken' in response_body:
+            return response_body['accessToken']
+        else:
+            return None
+
     def check_create_user_successfully(self):
         assert self.get_response_body['success'] == True
 
@@ -20,3 +27,4 @@ class CreateUserAPI(APIClient):
     def check_user_already_exist_error(self):
         assert self.get_error_msg == "User already exists", \
             f'Фактический результат {self.get_error_msg}'
+
